@@ -6,6 +6,7 @@ const  connectDB = require('./config/db.js')
 const authRoutes=require('./route/authRoute.js')
 const cateRoute=require('./route/categories.js')
 const productroute=require('./route/productRoute.js')
+const path=require('path')
  
 connectDB()
 const app=express()
@@ -18,6 +19,12 @@ const app=express()
  app.use(express.json());
  app.use(morgan("dev"));
 
+
+ app.use(express.static(path.join(__dirname,'../client/client/dist')))
+
+ app.get('*',function(req,res){
+    res.sendFile(path.join(__dirname,'../client/client/dist/index.html'))
+ })
  //route
 
  app.use("/api/v1/auth", authRoutes);
